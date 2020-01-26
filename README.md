@@ -1,7 +1,9 @@
 # Computable-Centering-Methods
 Code for the article Computable Centering Methods for Spiraling Algorithms and their Duals, with Motivations from the Theory of Lyapunov Functions
 
-The basis pursuit that I have adapted is from S. Boyd, N. Parikh, E. Chu, B. Peleato, and J. Eckstein. It is located here: https://web.stanford.edu/~boyd/papers/admm/
+The Cinderella scripts were used to generate the images in the paper. They are self-explanatory.
+
+The basis pursuit code that I have adapted is from S. Boyd, N. Parikh, E. Chu, B. Peleato, and J. Eckstein. It is located here: https://web.stanford.edu/~boyd/papers/admm/
 
 FILE: colinear_check
 DESCRIPTION: This function takes as its input three points y1,y2,y3 and a nonnegative number r. It returns the normalized inner product two normalized distance vectors, which should have absolute value 1 if y1,y2,y3 are distinct and colinear. The nonnegative number is a numerical threshold, so that if the absolute value computed is greater than 1-r, we decide the three vectors are colinear and return the value 0. Otherwise, we return 1.
