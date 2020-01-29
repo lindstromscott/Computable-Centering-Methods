@@ -1,5 +1,5 @@
 # Computable-Centering-Methods
-Code for the article Computable Centering Methods for Spiraling Algorithms and their Duals, with Motivations from the Theory of Lyapunov Functions
+Code for the article "Computable Centering Methods for Spiraling Algorithms and their Duals, with Motivations from the Theory of Lyapunov Functions"
 
 The Cinderella scripts were used to generate the images in the paper. They are self-explanatory.
 
@@ -32,7 +32,7 @@ DESCRIPTION: This function computes regular ADMM and then changes to computing t
 FILE: basis_pursuit_CRM_smart
 DESCRIPTION: This function computes regular ADMM and then changes to a "smart" version of the primal-dual method based on LT, where we query the objective function values to decide whether to accept an update based on centering or to reject it in favor of a normal update.
 
-
+____________________________________________________________________________________________________
 
 Pasting the following code into the console generates the data and prints the example from the article.
 
@@ -82,5 +82,38 @@ hold on
 hold off
 
 legend
+
+
+____________________________________________________________________________________________________
+
+Copying and pasting the following code into the console produces the descriptive statistics.
+
+
+%Run my experiments
+
+[statisticsLT statisticsADMM] = basis_pursuit_experiments(A, b, 10)
+
+
+%should be near zero, to verify both ADMM and LT had the same solutions
+max(statisticsLT.LTvsADMM) 
+
+%view the wins of LT
+LTwins = sum(statisticsLT.wins)
+
+%view the failures of LT
+LTfails = sum(statisticsLT.fails)
+
+%view the wins of ADMM
+ADMMwins = sum(statisticsADMM.wins)
+
+%view the failures of ADMM
+ADMMfails = sum(statisticsADMM.fails)
+
+%view quantiles
+pp = 0:0.25:1;
+
+LTdata = quantile(statisticsLT.iterates,pp)
+
+ADMMdata = quantile(statisticsADMM.iterates,pp)
 
 
