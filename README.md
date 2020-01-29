@@ -5,6 +5,10 @@ The Cinderella scripts were used to generate the images in the paper. They are s
 
 The basis pursuit code that I have adapted is from S. Boyd, N. Parikh, E. Chu, B. Peleato, and J. Eckstein. It is located here: https://web.stanford.edu/~boyd/papers/admm/
 
+____________________________________________________________________________________________________
+File description
+----------------------
+
 FILE: colinear_check
 DESCRIPTION: This function takes as its input three points y1,y2,y3 and a nonnegative number r. It returns the normalized inner product two normalized distance vectors, which should have absolute value 1 if y1,y2,y3 are distinct and colinear. The nonnegative number is a numerical threshold, so that if the absolute value computed is greater than 1-r, we decide the three vectors are colinear and return the value 0. Otherwise, we return 1.
 
@@ -36,8 +40,9 @@ FILE: basis_pursuit_experiments
 DESCRIPTION: runs experiments and generates comparison data
 
 ____________________________________________________________________________________________________
-
 Pasting the following code into the console generates the data and prints the example from the article.
+----------------------
+
 
 rand('seed', 0);
 randn('seed', 0);
@@ -88,8 +93,8 @@ legend
 
 
 ____________________________________________________________________________________________________
-
 Copying and pasting the following code into the console produces the descriptive statistics.
+----------------------
 
 
 %Run my experiments
