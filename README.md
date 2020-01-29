@@ -32,6 +32,9 @@ DESCRIPTION: This function computes regular ADMM and then changes to computing t
 FILE: basis_pursuit_CRM_smart
 DESCRIPTION: This function computes regular ADMM and then changes to a "smart" version of the primal-dual method based on LT, where we query the objective function values to decide whether to accept an update based on centering or to reject it in favor of a normal update.
 
+FILE: basis_pursuit_experiments
+DESCRIPTION: runs experiments and generates comparison data
+
 ____________________________________________________________________________________________________
 
 Pasting the following code into the console generates the data and prints the example from the article.
