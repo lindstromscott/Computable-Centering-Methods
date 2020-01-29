@@ -64,8 +64,13 @@ for k = 1:num_experiments
     
     if length(LThistory.objval) < length(history.objval)
         statisticsLT.wins(k) = 1;
+        statisticsADMM.wins(k) = 0;
+    elseif length(LThistory.objval) > length(history.objval)
+        statisticsADMM.wins(k) = 1;
+        statisticsLT.wins(k) = 0;
     else
         statisticsLT.wins(k) = 0;
+        statisticsADMM.wins(k) = 0;
     end
     
     if length(history.objval) == 50000
