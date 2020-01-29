@@ -1,4 +1,4 @@
-function [z, history] = basis_pursuit_LT_smart_new(A, b, rho, alpha)
+function [z, history] = basis_pursuit_LT_smart(A, b, rho, alpha)
 % basis_pursuit  Solve basis pursuit via ADMM
 %
 % [x, history] = basis_pursuit(A, b, rho, alpha)
@@ -28,7 +28,7 @@ t_start = tic;
 %% Global constants and defaults
 
 QUIET    = 0;
-MAX_ITER = 1500;
+MAX_ITER = 50000;
 ABSTOL   = 1e-8;
 RELTOL   = 1e-8;
 
@@ -109,23 +109,29 @@ end
 %Now we do the accelerated version
 uREG = u;
 uLT = u;
+zLT = z;
 
 
 for k = 2:MAX_ITER
     
     uold = u;
     
-    % x-update
-    xREG = P*(z - uREG) + q;
-    xLT = P*(z - uLT) + q;
-    if objective(A, b, xREG) > objective(A,b,xLT)
-        x = xLT;
-        u = uLT;
-    else
-        x = xREG;
-        u = uREG;
+    if mod(k,3) == 0 %if it's time to check the centering step, enter
+        % x-update
+       xREG = P*(z - uREG) + q;
+        xLT = P*(zLT - uLT) + q;
+       if objective(A, b, xREG) > objective(A,b,xLT)
+            x = xLT;
+            u = uLT;
+            
+       else
+           x = xREG;
+           u = uREG; 
+           
+       end
+    else %if it isn't time to check the centering step, skip the objective function check and update normally
+        x = P*(z - u) + q;
     end
-    
 
     % z-update with relaxation
     zold = z;
@@ -145,17 +151,21 @@ for k = 2:MAX_ITER
     end
     
     %compute the alternative multiplier candidate based on centering
-    if mod(k,3) == 2 && colinear_check(y1,2*y2-y1,piT(y1,y2,y3),10^(-3)) == 1
+    if mod(k,3) == 2 && colinear_check(y1,2*y2-y1,piT(y1,y2,y3),10^(-20)) == 1
 
         %on third updates, I circumcenter the dual if not colinear.
         %I then set shadow u to be prox_cd2 of the dual governing sequence
-		
-        uLT = proj_box(circumcenter(y1,2*y2-y1,piT(y1,y2,y3)),1); 
+		yLT=circumcenter(y1,2*y2-y1,piT(y1,y2,y3));
+        
+        uLT = proj_box(yLT,1); 
+        zLT = yLT-uLT;
     else
         % otherwise, I do the regular ADMM update
         uLT = u; 
     end
     uREG = u;
+    zREG = z;
+    
     
 
     
